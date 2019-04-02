@@ -1,0 +1,19 @@
+runMode: debug
+
+app:
+  pageSize: 10
+
+server:
+  port: 5050
+  readTimeout: 60
+  writeTimeout: 60
+
+database:
+  type: mysql
+  user: root
+  password: 111111
+  host: 127.0.0.1:3306
+  name: bill
+
+
+
