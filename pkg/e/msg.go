@@ -8,6 +8,7 @@ var MsgFlags = map[int]string{
 	ErrorDataBase: "数据库错误",
 	RepeatUser:    "重复的用户",
 	NotExistUser:  "不存在的用户",
+	ErrorAuth:     "登录信息有误",
 }
 
 func GetMsg(code int) string {

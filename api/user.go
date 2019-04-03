@@ -13,7 +13,13 @@ import (
 type register struct {
 	// 注册
 	Username string `valid:"Required;MaxSize(50)"`
-	Password string `valid:"Required; MaxSize(50)"`
+	Password string `valid:"Required;MaxSize(50)"`
+}
+
+type login struct {
+	// 登录
+	Username string `valid:"Required;MaxSize(50)"`
+	Password string `valid:"Required;MaxSize(50)"`
 }
 
 func Register(c *gin.Context) {
@@ -66,4 +72,43 @@ func Register(c *gin.Context) {
 		"msg":  e.GetMsg(code),
 		"user": reg,
 	})
+}
+
+func Login(c *gin.Context) {
+	/**
+	登录
+	*/
+
+	var (
+		code  int
+		login login
+	)
+
+	_ = c.BindJSON(&login)
+
+	valid := validation.Validation{}
+	valid.Required(login.Username, "username").Message("用户名不能为空")
+	valid.Required(login.Password, "password").Message("密码不能为空")
+
+	if valid.HasErrors() {
+		code = e.InvalidParams
+
+		for _, err := range valid.Errors {
+			log.Println(err.Key, err.Message)
+		}
+	} else {
+		checked := db.CheckUser(login.Username, utils.Md5(login.Password))
+		if checked {
+			code = e.Success
+		} else {
+			code = e.ErrorAuth
+		}
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"code":    code,
+		"message": e.GetMsg(code),
+		"user":    login,
+	})
+
 }

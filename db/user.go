@@ -20,6 +20,17 @@ func CreateUser(user User) bool {
 	return true
 }
 
+func CheckUser(username, password string) bool {
+	// 验证用户名和密码
+	var user User
+	db.Select("id").Where(User{Username: username, Password: password}).First(&user)
+	if user.ID > 0 {
+		return true
+	} else {
+		return false
+	}
+}
+
 func ExistUser(params map[string]interface{}) bool {
 	// 是否存在用户
 	var count int

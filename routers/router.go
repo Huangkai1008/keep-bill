@@ -2,6 +2,7 @@ package routers
 
 import (
 	"github.com/gin-gonic/gin"
+	"keep-bill/api"
 	"keep-bill/pkg/setting"
 )
 
@@ -15,8 +16,9 @@ func InitRouter() *gin.Engine {
 	userApi := r.Group("/user")
 	{
 		// 注册
-		userApi.POST("/register")
-
+		userApi.POST("/register", api.Register)
+		// 登录
+		userApi.POST("/login", api.Login)
 	}
 
 	return r

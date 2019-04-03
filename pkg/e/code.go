@@ -9,4 +9,5 @@ const (
 
 	RepeatUser   = 50002
 	NotExistUser = 50003
+	ErrorAuth    = 50004
 )
